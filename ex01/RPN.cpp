@@ -6,14 +6,15 @@
 /*   By: nlutsevi <nlutsevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/13 22:33:27 by nlutsevi          #+#    #+#             */
-/*   Updated: 2023/05/14 19:01:43 by nlutsevi         ###   ########.fr       */
+/*   Updated: 2023/05/14 20:21:15 by nlutsevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "RPN.hpp"
+# include "RPN.hpp"
+
 
 RPN::RPN(std::string const& mathExpr) : _mathExpr(mathExpr) {
-    calculateRPN();
+    prepareRPN();
 }
 
 
@@ -24,6 +25,7 @@ RPN::RPN(const RPN& src) {
 
 RPN                 &RPN::operator=(const RPN& src) {
     this->_mathExpr = src.getMathExpr();
+	this->_stack = src.getStack();
     return (*this);
 }
 
@@ -41,14 +43,22 @@ std::stack<int>     RPN::getStack(void) const {
     return this->_stack;
 }
 
-void                RPN::calculateRPN(void) const {
+
+int					RPN::getResult(void) const {
+	return this->_result;
+}
+
+
+
+void                RPN::prepareRPN(void) {
     std::string     mathExpr = this->_mathExpr;
     std::string     numberToCalc;
     int             digitsCount = 0;
     
+
     //remove untrailing spaces
     mathExpr.erase(mathExpr.find_last_not_of(" \n\r\t")+1);
-    for (int i = 0; i < mathExpr.length(); i++) {
+    for (unsigned long i = 0; i < mathExpr.length(); i++) {
         char c = mathExpr[i];
 
         //more than 10 numbers passed
@@ -62,18 +72,46 @@ void                RPN::calculateRPN(void) const {
             digitsCount += 1;
         }
         else if (this->isOperator(c)) {
-            //calculate
+            int num1;
+			int num2;
+			
+			if (this->_stack.size() < 2)
+				throw std::runtime_error("Error");
+			num2 = this->_stack.top();
+			this->_stack.pop();
+			num1 = this->_stack.top();
+			this->_stack.pop();
+			this->calculateRPN(num1, num2, c);
         }
         else
             throw std::runtime_error("Error");
-        if (!numberToCalc.empty()) {
-            this->_stack.push(std::atoi(numberToCalc.c_str()));
+		if (!numberToCalc.empty()) {
+			this->_stack.push(std::atoi(numberToCalc.c_str()));
             numberToCalc.clear();
         }
     }
+	if (this->_stack.size() != 1)
+		throw std::runtime_error("Error");
+	this->_result = this->_stack.top();
+	this->_stack.pop();
 }
 
 
-bool                RPN::isOperator(char c) {
+void				RPN::calculateRPN(int num1, int num2, char c) {
+	int		result;
+
+	if (c == '*')
+		result = num1 * num2;
+	else if (c == '/')
+		result = num1 / num2;
+	else if (c == '+')
+		result = num1 + num2;
+	else if (c == '-')
+		result = num1 - num2;
+	this->_stack.push(result);
+}
+
+
+bool                RPN::isOperator(char c) const {
     return (c == '*' || c == '/' || c == '+' || c == '-');
 }

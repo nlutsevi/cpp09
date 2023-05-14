@@ -6,7 +6,7 @@
 /*   By: nlutsevi <nlutsevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/13 22:32:54 by nlutsevi          #+#    #+#             */
-/*   Updated: 2023/05/14 18:53:07 by nlutsevi         ###   ########.fr       */
+/*   Updated: 2023/05/14 20:19:25 by nlutsevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include <iostream>
 # include <stack>
+# include <stdexcept>
 
 
 class RPN {
@@ -26,12 +27,15 @@ class RPN {
 
         std::string         getMathExpr(void) const;
         std::stack<int>     getStack(void) const;
-        void                calculateRPN(void) const;
-        bool                isOperator(char c);
+		int					getResult(void) const;
+        void                prepareRPN(void);
+		void                calculateRPN(int num1, int num2, char c);
+        bool                isOperator(char c) const;
 
     private:
         std::string         _mathExpr;
-        std::stack<int>     _stack;
+        std::stack<int>		_stack;
+		int					_result;
 };
 
 #endif
