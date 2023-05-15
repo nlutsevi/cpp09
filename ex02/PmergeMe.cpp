@@ -6,7 +6,7 @@
 /*   By: nlutsevi <nlutsevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/14 20:45:00 by nlutsevi          #+#    #+#             */
-/*   Updated: 2023/05/14 22:40:20 by nlutsevi         ###   ########.fr       */
+/*   Updated: 2023/05/15 18:52:22 by nlutsevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,15 +16,12 @@
 PmergeMe::PmergeMe(int argc, char **argv) : _argsSize(argc), _argv(argv) {
 	for (int i = 1; i < this->_argsSize; i++) {		
 		for (unsigned long j = 0; j < std::string(this->_argv[i]).length(); j++) {
-			if (!std::isdigit(this->_argv[i][j]) || std::atoi(this->_argv[i]) <= 0) {
+			if (!std::isdigit(this->_argv[i][j]) || std::atoi(this->_argv[i]) <= 0)
 				throw std::runtime_error("Error");
-			}
-			else {
-			this->_prevArgs.push_back(std::atoi(this->_argv[i]));
-			this->_sortedListArgs.push_back(std::atoi(this->_argv[i]));
-			this->_sortedVectArgs.push_back(std::atoi(this->_argv[i]));
-			}
 		}
+		this->_prevArgs.push_back(std::atoi(this->_argv[i]));
+		this->_sortedListArgs.push_back(std::atoi(this->_argv[i]));
+		this->_sortedVectArgs.push_back(std::atoi(this->_argv[i]));
 	}
 };
 
