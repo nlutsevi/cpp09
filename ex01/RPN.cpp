@@ -6,7 +6,7 @@
 /*   By: nlutsevi <nlutsevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/13 22:33:27 by nlutsevi          #+#    #+#             */
-/*   Updated: 2023/05/15 18:54:02 by nlutsevi         ###   ########.fr       */
+/*   Updated: 2023/05/15 19:55:13 by nlutsevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,8 +95,11 @@ void				RPN::calculateRPN(int num1, int num2, char c) {
 
 	if (c == '*')
 		result = num1 * num2;
-	else if (c == '/')
+	else if (c == '/') {
+		if (num2 == 0)
+			throw std::runtime_error("Error");
 		result = num1 / num2;
+	}
 	else if (c == '+')
 		result = num1 + num2;
 	else if (c == '-')
