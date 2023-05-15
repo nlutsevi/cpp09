@@ -6,7 +6,7 @@
 /*   By: nlutsevi <nlutsevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/13 22:33:27 by nlutsevi          #+#    #+#             */
-/*   Updated: 2023/05/14 20:21:15 by nlutsevi         ###   ########.fr       */
+/*   Updated: 2023/05/15 18:54:02 by nlutsevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,24 +53,17 @@ int					RPN::getResult(void) const {
 void                RPN::prepareRPN(void) {
     std::string     mathExpr = this->_mathExpr;
     std::string     numberToCalc;
-    int             digitsCount = 0;
-    
 
     //remove untrailing spaces
     mathExpr.erase(mathExpr.find_last_not_of(" \n\r\t")+1);
     for (unsigned long i = 0; i < mathExpr.length(); i++) {
         char c = mathExpr[i];
 
-        //more than 10 numbers passed
-        if (digitsCount >= 10)
-            throw std::runtime_error("Too many numbers passed.");
         //skip space
         if (c == ' ')
             continue;
-        else if (std::isdigit(c)) {
+        else if (std::isdigit(c))
             numberToCalc += c;
-            digitsCount += 1;
-        }
         else if (this->isOperator(c)) {
             int num1;
 			int num2;
