@@ -6,7 +6,7 @@
 /*   By: nlutsevi <nlutsevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/13 18:54:18 by nlutsevi          #+#    #+#             */
-/*   Updated: 2023/05/13 22:22:28 by nlutsevi         ###   ########.fr       */
+/*   Updated: 2023/05/18 20:30:23 by nlutsevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,8 +71,17 @@ bool                            BitcoinExchange::isInputDateValid(std::string da
     // Regular expression pattern: yyyy-mm-dd
     std::regex regexPattern("\\d{4}-\\d{2}-\\d{2}");
 
-    if (std::regex_match(dateStr, regexPattern) == 1)
-        return true;
+    if (std::regex_match(dateStr, regexPattern) == 1) {
+		std::string year = dateStr.substr(0, 4);
+    	std::string month = dateStr.substr(5, 2);
+    	std::string day = dateStr.substr(8, 2);
+
+		if (std::atoi(year.c_str()) >= 1 && std::atoi(year.c_str()) <= 2023 \
+			&& std::atoi(month.c_str()) >= 1 && std::atoi(month.c_str()) <= 12 \
+			&& std::atoi(day.c_str()) >= 1 && std::atoi(day.c_str()) <= 31) {
+				return true;
+			}
+	}
     return false;
 }
 

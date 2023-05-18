@@ -6,7 +6,7 @@
 /*   By: nlutsevi <nlutsevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/13 18:41:35 by nlutsevi          #+#    #+#             */
-/*   Updated: 2023/05/13 22:19:16 by nlutsevi         ###   ########.fr       */
+/*   Updated: 2023/05/18 20:38:27 by nlutsevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,19 +32,20 @@ int     main(int argc, char **argv) {
             std::istringstream    iss(line);
             std::string           dateStr;
             float                 bitcoinQuantity;
+			std::string			  extraCheck;
 
             if (isFirstLine) {
                 isFirstLine = false;
                 continue;
             }
             if (std::getline(iss, dateStr, '|') && iss >> bitcoinQuantity) {
-                try {
+				try {
                     //Remove trailing whitespces from date
                     dateStr.erase(dateStr.find_last_not_of(" \n\r\t")+1);
-                    if (!be.isInputDateValid(dateStr)) {
+					if (!be.isInputDateValid(dateStr)) {
                         std::cout << "Error: bad input => " << dateStr << std::endl;
                     }
-                    if (be.isBitcoinQuantityValid(bitcoinQuantity)) {
+                    else if (be.isBitcoinQuantityValid(bitcoinQuantity)) {
                         float   rate;
                         float   result;
 
