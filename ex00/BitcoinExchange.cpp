@@ -6,7 +6,7 @@
 /*   By: nlutsevi <nlutsevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/13 18:54:18 by nlutsevi          #+#    #+#             */
-/*   Updated: 2023/05/22 19:21:57 by nlutsevi         ###   ########.fr       */
+/*   Updated: 2023/05/22 20:13:34 by nlutsevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,17 @@ bool                            BitcoinExchange::isInputDateValid(std::string da
 		if (std::atoi(year.c_str()) >= 1 \
 			&& std::atoi(month.c_str()) >= 1 && std::atoi(month.c_str()) <= 12 \
 			&& std::atoi(day.c_str()) >= 1 && std::atoi(day.c_str()) <= 31) {
+				if (std::atoi(month.c_str()) == 4 || std::atoi(month.c_str()) == 6 || \
+					std::atoi(month.c_str()) == 9 || std::atoi(month.c_str()) == 11) {
+						if (std::atoi(day.c_str()) == 31) {
+							return false;
+						}
+					}
+				if (std::atoi(month.c_str()) == 2) {
+					if (std::atoi(day.c_str()) == 30 || std::atoi(day.c_str()) == 31) {
+						return false;
+					}
+				}
 				return true;
 			}
 	}
