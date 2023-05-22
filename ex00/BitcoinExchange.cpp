@@ -6,7 +6,7 @@
 /*   By: nlutsevi <nlutsevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/13 18:54:18 by nlutsevi          #+#    #+#             */
-/*   Updated: 2023/05/18 20:30:23 by nlutsevi         ###   ########.fr       */
+/*   Updated: 2023/05/22 19:21:57 by nlutsevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,27 @@ std::map<std::string, float>    BitcoinExchange::getExchangeRates(void) const {
 }
 
 
+bool                            BitcoinExchange::isInputValidFormat(std::string input) const {
+    unsigned long i2 = 0;
+
+    input.erase(input.find_last_not_of(" \n\r\t")+1);
+    for (unsigned long i = 10; i < input.length(); i++) {
+        if (input[i] == ' ' || input[i] == '\n' || input[i] == '\r' || input[i] == '\t')
+            continue;
+        else if (input[i] == '|') {
+            i2 = i + 1;
+            break;
+        }
+    }
+    for (unsigned long i = i2; i < input.length(); i++) {
+        if (!(std::isdigit(input[i]) || input[i] == ' ' || input[i] == '\n' || input[i] == '\r' || \
+                input[i] == '\t' || input[i] == '.' || input[i] == '-')) {
+            return false;
+        }
+    }
+    return true;
+}
+
 bool                            BitcoinExchange::isInputDateValid(std::string dateStr) const {
     // Regular expression pattern: yyyy-mm-dd
     std::regex regexPattern("\\d{4}-\\d{2}-\\d{2}");
@@ -76,7 +97,7 @@ bool                            BitcoinExchange::isInputDateValid(std::string da
     	std::string month = dateStr.substr(5, 2);
     	std::string day = dateStr.substr(8, 2);
 
-		if (std::atoi(year.c_str()) >= 1 && std::atoi(year.c_str()) <= 2023 \
+		if (std::atoi(year.c_str()) >= 1 \
 			&& std::atoi(month.c_str()) >= 1 && std::atoi(month.c_str()) <= 12 \
 			&& std::atoi(day.c_str()) >= 1 && std::atoi(day.c_str()) <= 31) {
 				return true;

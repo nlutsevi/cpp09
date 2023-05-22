@@ -6,7 +6,7 @@
 /*   By: nlutsevi <nlutsevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/13 18:40:05 by nlutsevi          #+#    #+#             */
-/*   Updated: 2023/05/13 21:28:18 by nlutsevi         ###   ########.fr       */
+/*   Updated: 2023/05/22 18:38:23 by nlutsevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ class BitcoinExchange {
         void                            parseDB();
         std::string                     getDbFileName() const;
         std::map<std::string, float>    getExchangeRates() const;
+        bool                            isInputValidFormat(std::string imput) const;
         bool                            isInputDateValid(std::string dateStr) const;
         bool                            isBitcoinQuantityValid(float bitcoinQuantity) const;
         float                           getRateOnDate(const std::string& dateStr) const;
